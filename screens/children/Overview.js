@@ -9,20 +9,20 @@ import {
   View,
   ImageBackground
 } from "react-native";
-import SectionsPage from '../shared/pages/Sections.js';
-import Menu from '../shared/Menu.js';
+import { withNavigation } from 'react-navigation';
+import OverviewPage from '../shared/pages/Overview.js'
 
-export default class Sections extends React.Component {
+export default class Overview extends React.Component {
   static navigationOptions = {
     header: null
   };
 
   render() {
+    console.log(this.props.navigation.state);
     return (
-        <SectionsPage
-          menu={this.props.menu}
-          content={this.props.config}
-        />
+      <OverviewPage
+        content={this.props.navigation.state.params}
+      />
     );
   }
 }

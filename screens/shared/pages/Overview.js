@@ -10,58 +10,30 @@ import {
   ImageBackground,
   TouchableWithoutFeedback
 } from "react-native";
-import { withNavigation } from 'react-navigation';
 import PageHead from '../PageHead.js';
 import Menu from '../Menu.js';
 
-class SectionsPage extends React.Component {
+export default class Overview extends React.Component {
   static navigationOptions = {
     header: null
   };
 
   render() {
-    var sections = this.props.content.sections.map((e,i) => {
-        return <TouchableWithoutFeedback
-          key={i}
-          onPress={() => {
-              this.props.navigation.navigate(e.link, {
-                  images: this.props.content.images,
-                  title: this.props.content.title
-              })
-          }}
-        >
-        <View key={i} style={styles.subSection}>
-            <View style={styles.subImageContainer}>
-              <Image
-                style={styles.subImage}
-                source={e.pic}
-              />
-            </View>
-            <Text style={styles.subImageTitle}>{e.title}</Text>
-        </View>
-        </TouchableWithoutFeedback>
-    })
-
     return (
       <View style={styles.container}>
         <View>
           <PageHead images={this.props.content.images} title={this.props.content.title} />
         </View>
         <View>
-          <Text style={styles.subSectionTitle}>{this.props.content.subSectionTitle}</Text>
+          <Text style={styles.subSectionTitle}>hi</Text>
         </View>
-        <ScrollView style={styles.subSectionList}>
-          {sections}
-        </ScrollView>
         <View style={styles.menu}>
-          <Menu icon={this.props.content.images.icon} menu={this.props.menu}/>
+          <Menu icon={this.props.content.images.icon} master={this.props.master}/>
         </View>
       </View>
     );
   }
 }
-
-export default withNavigation(SectionsPage)
 
 const styles = StyleSheet.create({
   container: {

@@ -10,35 +10,70 @@ import {
   ImageBackground,
   TouchableWithoutFeedback
 } from "react-native";
+import { withNavigation } from "react-navigation";
 
-export default class Menu extends React.Component {
+class Menu extends React.Component {
   static navigationOptions = {
     header: null
   };
 
   render() {
+    var current_location = this.props.navigation.state.routeName;
+
+    if (this.props.navigation.state.routeName) {
+      if (this.props.navigation.state.routeName.routeName) {
+        current_location = this.props.navigation.state.routeName.routeName;
+      }
+    }
+
+    console.log(current_location);
+    var color = 'rgba()'
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.props.master.navigation.navigate('Sections')
-          }}
-        >
-          <View style={styles.item}>
-            <View style={styles.IconContainer}>
-              <Image style={styles.IconImage} source={this.props.icon} />
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.props.master.navigation.navigate('Projects')
+            this.props.navigation.navigate("Sections");
           }}
         >
           <View style={styles.item}>
             <View style={styles.IconContainer}>
               <Image
-                style={styles.IconImage}
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: "contain",
+                  tintColor:
+                    current_location == 'NaturalGas'
+                      ? "#FFC900"
+                      : "black"
+                }}
+                source={this.props.icon}
+              />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            if (this.props.menu && this.props.menu.projects) {
+            } else {
+              this.props.navigation.navigate("Projects");
+            }
+          }}
+        >
+          <View style={styles.item}>
+            <View style={styles.IconContainer}>
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: "contain",
+                  tintColor:
+                    current_location == 'Projects' ? '#FFC900' : (this.props.menu && this.props.menu.projects
+                      ? "gray"
+                      : "black")
+                }}
                 source={require("../../images/projectsIcon.png")}
               />
             </View>
@@ -46,7 +81,7 @@ export default class Menu extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.props.master.navigation.navigate('Home')
+            this.props.navigation.navigate("Home");
           }}
         >
           <View style={styles.item}>
@@ -59,6 +94,8 @@ export default class Menu extends React.Component {
     );
   }
 }
+
+export default withNavigation(Menu);
 
 const styles = StyleSheet.create({
   container: {

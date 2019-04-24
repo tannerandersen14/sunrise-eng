@@ -13,6 +13,7 @@ import CloudSmart from "../screens/CloudSmart";
 import BuildingCode from "../screens/BuildingCode";
 import FirmStats from "../screens/FirmStats";
 
+import OverviewScreen from "../screens/children/Overview";
 import SectionsScreen from "../screens/children/Sections";
 import ProjectsScreen from "../screens/children/Projects";
 
@@ -29,11 +30,19 @@ HomeStack.navigationOptions = {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+const OverviewStack = createStackNavigator({
+  Overview: OverviewScreen
+});
+
+HomeStack.navigationOptions = {
+  tabBarLabel: "Overview"
+};
+
 const SectionsStack = createStackNavigator({
   Sections: SectionsScreen
 });
 
-HomeStack.navigationOptions = {
+SectionsStack.navigationOptions = {
   tabBarLabel: "Sections"
 };
 
@@ -41,7 +50,7 @@ const ProjectsStack = createStackNavigator({
   Projects: ProjectsScreen
 });
 
-HomeStack.navigationOptions = {
+ProjectsStack.navigationOptions = {
   tabBarLabel: "Projects"
 };
 
@@ -118,6 +127,7 @@ FirmStatsStack.navigationOptions = {
 export default createSwitchNavigator({
   HomeStack,
   SectionsStack,
+  OverviewStack,
   ProjectsStack,
 
   NaturalGasStacks,
