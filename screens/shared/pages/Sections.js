@@ -20,22 +20,50 @@ class SectionsPage extends React.Component {
   };
 
   render() {
+
     var sections = this.props.content.sections.map((e,i) => {
+        var imageComponent = null;
+        if(e.images && e.images.featured_image) {
+          imageComponent = <Image
+            style={styles.subImage}
+            source={{uri: e.images.featured_image}}
+          />
+        } else {
+          imageComponent = <Image
+            style={styles.subImage}
+            source={e.pic}
+          />
+        }
+
+
         return <TouchableWithoutFeedback
           key={i}
           onPress={() => {
-              this.props.navigation.navigate(e.link, {
-                  images: this.props.content.images,
-                  title: this.props.content.title
-              })
+              if(e.link === 'Projects'){
+                this.props.navigation.navigate('Projects', {
+                    images: this.props.content.images,
+                    title: this.props.content.title,
+                    cat_title: e.title,
+                    cat: e.cat
+                })
+              } else if (e.link === 'Project') {
+                this.props.navigation.navigate('ProjectViewer', {
+                    images: e.images,
+                    title: e.title,
+                    project: e.project,
+                    section: e.section
+                })
+              } else {
+                this.props.navigation.navigate(e.link, {
+                    images: this.props.content.images,
+                    title: this.props.content.title
+                })
+              }
           }}
         >
         <View key={i} style={styles.subSection}>
             <View style={styles.subImageContainer}>
-              <Image
-                style={styles.subImage}
-                source={e.pic}
-              />
+              {imageComponent}
             </View>
             <Text style={styles.subImageTitle}>{e.title}</Text>
         </View>
@@ -88,8 +116,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: 0,
+    flexGrow: 1,
     height: 200,
-    paddingBottom: 10
+    paddingBottom: 20
   },
   subImageContainer: {
     height: '80%',
@@ -99,7 +129,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    resizeMode: "contain"
+    resizeMode: "cover",
+    marginRight: 50,
+    marginLeft: 50
   },
   subImageTitle: {
     width: '100%',
@@ -109,7 +141,7 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
   menu: {
-    height: 75,
+    height: 60,
     width: '100%',
     position: 'absolute',
     bottom: 0

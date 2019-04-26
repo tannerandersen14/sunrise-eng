@@ -1,6 +1,7 @@
 import React from "react";
 import { Platform } from "react-native";
-import { createStackNavigator, createSwitchNavigator } from "react-navigation";
+// import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createSwitchNavigator, createAppContainer } from "react-navigation";
 
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
@@ -16,6 +17,7 @@ import FirmStats from "../screens/FirmStats";
 import OverviewScreen from "../screens/children/Overview";
 import SectionsScreen from "../screens/children/Sections";
 import ProjectsScreen from "../screens/children/Projects";
+import ProjectViewer from "../screens/children/ProjectViewer";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -52,6 +54,14 @@ const ProjectsStack = createStackNavigator({
 
 ProjectsStack.navigationOptions = {
   tabBarLabel: "Projects"
+};
+
+const ProjectViewerStack = createStackNavigator({
+  ProjectViewer: ProjectViewer
+});
+
+ProjectViewerStack.navigationOptions = {
+  tabBarLabel: "ProjectViewer"
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -126,16 +136,30 @@ FirmStatsStack.navigationOptions = {
 
 export default createSwitchNavigator({
   HomeStack,
+  BuildingCodeStacks,
   SectionsStack,
-  OverviewStack,
   ProjectsStack,
-
+  ProjectViewer,
+  OverviewStack,
   NaturalGasStacks,
   NaturalGasSections,
-  NaturalGasProjects,
   EngineeringStacks,
+  NaturalGasProjects,
   SurveyStacks,
   CloudSmartStacks,
-  BuildingCodeStacks,
-  FirmStatsStack
+  FirmStatsStack,
 });
+
+
+// tonys different approach
+// import Experience from "../screens/Experience.js";
+//
+//
+// const MainNavigator = createStackNavigator({
+//   Home: {screen: HomeScreen},
+//   Experience: { screen: Experience }
+// });
+//
+// const App = createSwitchNavigator({MainNavigator});
+//
+// export default App;

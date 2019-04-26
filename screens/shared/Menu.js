@@ -19,20 +19,30 @@ class Menu extends React.Component {
 
   render() {
     var current_location = this.props.navigation.state.routeName;
+    var experiences = [
+      "NaturalGas",
+      "Engineering",
+      "Survey",
+      "CloudSmart",
+      "BuildingCode",
+      "FirmStats"
+    ];
 
     if (this.props.navigation.state.routeName) {
       if (this.props.navigation.state.routeName.routeName) {
         current_location = this.props.navigation.state.routeName.routeName;
       }
     }
-
-    console.log(current_location);
-    var color = 'rgba()'
+    var color = "rgba()";
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.props.navigation.navigate("Sections");
+            if (current_location) {
+              this.props.navigation.navigate("Home");
+            } else {
+              this.props.navigation.navigate("Sections");
+            }
           }}
         >
           <View style={styles.item}>
@@ -44,7 +54,7 @@ class Menu extends React.Component {
                   width: null,
                   resizeMode: "contain",
                   tintColor:
-                    current_location == 'NaturalGas'
+                    experiences.indexOf(current_location) !== -1
                       ? "#FFC900"
                       : "black"
                 }}
@@ -70,9 +80,11 @@ class Menu extends React.Component {
                   width: null,
                   resizeMode: "contain",
                   tintColor:
-                    current_location == 'Projects' ? '#FFC900' : (this.props.menu && this.props.menu.projects
+                    current_location == "Projects"
+                      ? "#FFC900"
+                      : this.props.menu && this.props.menu.projects
                       ? "gray"
-                      : "black")
+                      : "black"
                 }}
                 source={require("../../images/projectsIcon.png")}
               />

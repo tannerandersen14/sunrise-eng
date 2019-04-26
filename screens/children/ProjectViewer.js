@@ -9,20 +9,21 @@ import {
   View,
   ImageBackground
 } from "react-native";
-import { withNavigation } from 'react-navigation';
-import OverviewPage from '../shared/pages/Overview.js'
+import ProjectPage from '../shared/pages/Project.js';
+import Menu from '../shared/Menu.js';
 
-export default class Overview extends React.Component {
+export default class ProjectViewer extends React.Component {
   static navigationOptions = {
     header: null
   };
 
   render() {
-
+    var params = this.props.navigation.state.params;
     return (
-      <OverviewPage
-        content={this.props.navigation.state.params}
-      />
+        <ProjectPage
+          master={this.props}
+          content={params}
+        />
     );
   }
 }

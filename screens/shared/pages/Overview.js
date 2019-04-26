@@ -22,10 +22,10 @@ export default class Overview extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <PageHead images={this.props.content.images} title={this.props.content.title} />
+          <PageHead images={this.props.content.images} title={this.props.content.title+' Overview'} />
         </View>
         <View>
-          <Text style={styles.subSectionTitle}>hi</Text>
+          <Text style={styles.subSectionTitle}>Overview </Text>
         </View>
         <View style={styles.menu}>
           <Menu icon={this.props.content.images.icon} master={this.props.master}/>
