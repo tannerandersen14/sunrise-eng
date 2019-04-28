@@ -138,15 +138,86 @@ export default class Survey extends React.Component {
       link: 'Overview'
     }];
 
+    var image_matcher = {
+      ["34"]: {
+        title: "Utility Systems Management",
+        image: require("../images/gis-utilitysystemsmanagement.jpg"),
+        sortorder: 1,
+        overview: {
+          title: "GIS - Utility Systems Management",
+          description:
+            "Maintaining utilities has never been easier. SMART GIS easily transforms existing utility infrastructure into a transportable application; no more need for paper maps or back-at-the-office collaboration. Our Cloud SMART utility innovative options allow for easy operations optimization, report preparation, and interactive editing and sharing capabilities.",
+        }
+      },
+      ["35"]: {
+        title: "Arts, Parks, & Trails Management",
+        image: require("../images/surveylandboundaryeasments.jpg"),
+        sortorder: 2,
+        overview: {
+          title: "GIS - Arts, Parks, and Trails Management",
+          description:
+            "Sunrise Engineering has extensive experience in the determination of land boundaries on the ground. Our team of Professional Land Surveyors is well versed in land boundary matters and the representation of boundaries on plats, maps, exhibits, and in legal descriptions. We serve both public and private clients with their boundary, acquisition and development projects across the western United States."
+        }
+      },
+      ["36"]: {
+        title: "Transportation System Management",
+        image: require("../images/gistransportationsystemmanagement.jpg"),
+        sortorder: 3,
+        overview: {
+          title: "GIS - Transportation System Management",
+          description:
+            "SMART Transportation can save massive amounts of time when planning pavement maintenance or managing rights-of-way. Efficiently build bus routes and schedules that consider gas consumption and travel time. Create better records of accidents and accident frequency to better understand why they are occurring and how to fix the situation. Communicate public parking or plan roadway maintenance. Create heat maps of traffic counts to help determine proper traffic flow options to consider."
+        }
+      },
+      ["37"]: {
+        title: "Facility Asset Management",
+        image: require("../images/gisfacilityassetmanagement.jpg"),
+        sortorder: 4,
+        overview: {
+          title: "GIS - Facility Asset Management",
+          description:
+            "SMART mapping helps make sense of improvements to emergency planning, work orders, and energy usage by allowing users to visualize them geographically. Easily find solutions by linking operation and parts manuals to facility assets. Cloud SMART can also help optimize energy usage, map utility systems, and plan future expansion. Quickly search any building facility whether it be a City government building or School to interactively visualize floorplans and office spaces. Our SMART mapping of any facility type empowers any user with location and efficient relevant information."
+        }
+    },
+      ["38"]: {
+        title: "Zoning and Land Use Management",
+        image: require("../images/giszoningandlandusemanagement.jpg"),
+        sortorder: 4,
+        overview: {
+          title: "GIS - Zoning and Land Use Management",
+          description:
+            "Accessibility of Cloud SMART data is key to those who use it. Quickly search by name or address in a simple online application and understand the value of having this information presented in a manner that is easily interpreted. Cloud SMART GIS can display topographic data, share zoning maps, and host aerial imagery. City governments can conceptualize zoning district changes and link ordinance documentation to those districts in real-time. Empower communities with real world information."
+        }
+    },
+      ["39"]: {
+        title: "Water Resource Management",
+        image: require("../images/giswaterresourcemanagement.jpg"),
+        sortorder: 5,
+        overview: {
+          title: "GIS - Water Resource Management",
+          description:
+            "Demand for water is critical and water resource management can be daunting and time-consuming, but Cloud SMART GIS makes organizing water resources simple and affordable. Combining our sophisticated knowledge of water resource maintenance processes with a user-friendly visual platform, Cloud SMART GIS makes it easy to manage water rights, show demand trends, visualize watersheds, and record groundwater levels."
+        }
+      }
+    };
+
     for (var pK in cats) {
       if (cats.hasOwnProperty(pK)) {
-        var p = cats[pK];
-        cat_items.push({
-          pic: require("../images/section_image.png"),
-          title: p.title,
-          link: 'Projects',
-          cat: p.cat
-        });
+          var p = cats[pK];
+          var p_image = require("../images/section_image.png");
+          var p_title = p.title;
+
+          if (image_matcher[p.cat]) {
+            if (image_matcher[p.cat].image) p_image = image_matcher[p.cat].image;
+            if (image_matcher[p.cat].title) p_title = image_matcher[p.cat].title;
+          }
+
+          cat_items.push({
+            pic: p_image,
+            title: p_title,
+            link: "Projects",
+            cat: p.cat
+          });
       }
     }
 
@@ -158,7 +229,7 @@ export default class Survey extends React.Component {
 
     var images = {
       icon: require("../images/survey.png"),
-      background: require("../images/head_background.png")
+      background: require("../images/sunrise-engineering-services-experience-gis-150x150.jpg")
     };
     var disable = {
       projects: true
@@ -166,7 +237,7 @@ export default class Survey extends React.Component {
     var config = {
       images: {
         icon: require("../images/natural_gas_icon.png"),
-        background: require("../images/head_background.png")
+        background: require("../images/sunrise-engineering-services-experience-gis-150x150.jpg")
       },
       title: "Cloud Smart GIS",
       subSectionTitle: "GIS Subsection",

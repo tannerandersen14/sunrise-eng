@@ -138,15 +138,66 @@ export default class Survey extends React.Component {
       link: 'Overview'
     }];
 
+    var image_matcher = {
+      ["32"]: {
+        title: "Precision Construction Layout",
+        image: require("../images/surveyprecisionconstructionlayout.jpg"),
+        sortorder: 1,
+        overview: {
+          title: "Survey - Precision Construction Layout",
+          description:
+            "Sunrise Engineering works closely with our clients, the general contractor and field superintendents to provide the staking required for heavy civil, roadway, pipeline and industrial projects. Our surveyors have the expertise, equipment and software to adapt to the construction site’s ever changing conditions. Our surveying team focuses on providing timely and accurate stakes and references for your projects.",
+        }
+      },
+      ["112"]: {
+        title: "Land Boundary, Easements, Right-of-way",
+        image: require("../images/surveylandboundaryeasments.jpg"),
+        sortorder: 2,
+        overview: {
+          title: "Survey - Land Boundary, Easements, Right-of-way",
+          description:
+            "Sunrise Engineering has extensive experience in the determination of land boundaries on the ground. Our team of Professional Land Surveyors is well versed in land boundary matters and the representation of boundaries on plats, maps, exhibits, and in legal descriptions. We serve both public and private clients with their boundary, acquisition and development projects across the western United States."
+        }
+      },
+      ["115"]: {
+        title: "Topographic and ALTA Survey",
+        image: require("../images/surveytopographic.jpg"),
+        sortorder: 3,
+        overview: {
+          title: "Survey - Topographic and ALTA Survey",
+          description:
+            "Topography is an important first task for many improvement and development projects. Our team of surveyors utilizes the GPS, UAV’s, aerial photography, and Laser Scanners to collection, model and represent the existing conditions of your site. Additionally, the land boundary, easements and other information provided by title report is reviewed, analyzed and depicted both in CAD and by plat. We attend to the details and accuracy of the mapping that we prepare."
+        }
+      },
+      ["33"]: {
+        title: "3D Imaging",
+        image: require("../images/survey-3DImaging.jpg"),
+        sortorder: 4,
+        overview: {
+          title: "Survey - As Built Mapping",
+          description:
+            "Sunrise Engineering is a regional leader for surveying and professional engineering services. We implement High Definition Scanning (HDS), which gathers precise laser scan information, allowing our engineers to evaluate any project site. These advanced tools capture tremendous amounts of detailed data, unattainable by other methods. Our extensive experience demonstrates our capabilities in every surveying need that you have."
+        }
+      }
+    };
+
     for (var pK in cats) {
       if (cats.hasOwnProperty(pK)) {
-        var p = cats[pK];
-        cat_items.push({
-          pic: require("../images/section_image.png"),
-          title: p.title,
-          link: 'Projects',
-          cat: p.cat
-        });
+          var p = cats[pK];
+          var p_image = require("../images/section_image.png");
+          var p_title = p.title;
+
+          if (image_matcher[p.cat]) {
+            if (image_matcher[p.cat].image) p_image = image_matcher[p.cat].image;
+            if (image_matcher[p.cat].title) p_title = image_matcher[p.cat].title;
+          }
+
+          cat_items.push({
+            pic: p_image,
+            title: p_title,
+            link: "Projects",
+            cat: p.cat
+          });
       }
     }
 

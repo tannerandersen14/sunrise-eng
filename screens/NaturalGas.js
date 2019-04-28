@@ -86,7 +86,8 @@ export default class NaturalGas extends React.Component {
     ];
 
     fetch(
-      "https://sunrise-eng.com/wp-json/wp/v2/projects?per_page=50&categories="+this.state.category
+      "https://sunrise-eng.com/wp-json/wp/v2/projects?per_page=50&categories=" +
+        this.state.category
     )
       .then(res => res.json())
       .then(data => {
@@ -132,19 +133,88 @@ export default class NaturalGas extends React.Component {
 
   sub_category_rows = () => {
     var cats = this.state.sub_catagories;
-    var cat_items = [{
-      pic: require("../images/section_image.png"),
-      title: 'Overview',
-      link: 'Overview'
-    }];
+    var cat_items = [
+      {
+        pic: require("../images/section_image.png"),
+        title: "Overview",
+        link: "Overview"
+      }
+    ];
+
+    var image_matcher = {
+      ["10"]: {
+        title: "Pipeline Engineering",
+        image: require("../images/pipelineengineernig.jpg"),
+        sortorder: 1,
+        overview: {
+          title: "Natural Gas - Pipeline Engineering",
+          description:
+            "With 30 years of experience working with transmission pipeline and distribution companies in both the public and private spheres, we are leaders in natural gas pipeline design and engineering. We are designing new systems, improving or replacing existing systems and making sure permitting and environmental concerns are addressed properly. From start to finish, Sunrise is capable of handling your pipeline engineering and design project.",
+          list: [
+            "Transmission and Distribution",
+            "Regulation and Metering",
+            "LNG and Propane Distribution",
+            "Pipeline Safety Compliance",
+            "Material Specification & Procurement",
+            "Contract Documents & Negotiations",
+            "System Start-up",
+            "System Modeling"
+          ]
+        }
+      },
+      ["17"]: {
+        title: "3rd Party Inspection and Audit",
+        image: require("../images/3rdpartyinspectionandaudit.jpg"),
+        sortorder: 2,
+        overview: {
+          title: "Natural Gas - 3rd Part INspection and Audit",
+          description:
+            "When the shovels dig in and pipe starts going in the ground it’s critical that your designs and specifications are implemented safely and correctly. Our 3rd-Party Inspectors have the knowledge and experience to be your eyes and ears to monitor construction and safety standards on your steel and plastic pipeline projects."
+        }
+      },
+      ["16"]: {
+        title: "Compliance Documentation",
+        image: require("../images/complianceandstudies.jpg"),
+        sortorder: 3,
+        overview: {
+          title: "Natural Gas - Compliance Documentation",
+          description:
+            "The work doesn’t end when the pipeline is buried. Sunrise is helping operators to stay in compliance and to keep things safely and efficiently flowing to their customers during and after startup. We can help you develop, maintain and stay in compliance with required documentation.",
+          list: [
+            "Procedure Manuals",
+            "Operation and Maintenance Manuals",
+            "Emergency Response Plans",
+            "Operator Qualification Plans"
+          ]
+        }
+      },
+      ["15"]: {
+        title: "As-Built/Mapping",
+        image: require("../images/asbuiltmapping.jpg"),
+        sortorder: 4,
+        overview: {
+          title: "Natural Gas - As Built Mapping",
+          description:
+            "Whether you require paper or electronic submission of project as-builts, Sunrise can help you document and manage your project close outs. We utilize the latest technologies to prepare and manage as-built drawings and GIS mapped systems. We recognize the value of knowing where your assets lie, and can help you keep that knowledge safe and accessible."
+        }
+      }
+    };
 
     for (var pK in cats) {
       if (cats.hasOwnProperty(pK)) {
         var p = cats[pK];
+        var p_image = require("../images/section_image.png");
+        var p_title = p.title;
+
+        if (image_matcher[p.cat]) {
+          if (image_matcher[p.cat].image) p_image = image_matcher[p.cat].image;
+          if (image_matcher[p.cat].title) p_title = image_matcher[p.cat].title;
+        }
+
         cat_items.push({
-          pic: require("../images/section_image.png"),
-          title: p.title,
-          link: 'Projects',
+          pic: p_image,
+          title: p_title,
+          link: "Projects",
           cat: p.cat
         });
       }
@@ -158,7 +228,7 @@ export default class NaturalGas extends React.Component {
 
     var images = {
       icon: require("../images/building_code.png"),
-      background: require("../images/head_background.png")
+      background: require("../images/Sunrise-Engineering-Experience-Natural-Gas-Pipeline-Design-Service-150x150.jpg")
     };
     var disable = {
       projects: true
@@ -166,7 +236,7 @@ export default class NaturalGas extends React.Component {
     var config = {
       images: {
         icon: require("../images/natural_gas_icon.png"),
-        background: require("../images/head_background.png")
+        background: require("../images/Sunrise-Engineering-Experience-Natural-Gas-Pipeline-Design-Service-150x150.jpg")
       },
       title: "Natural Gas",
       subSectionTitle: "Natural Gas Subsection",
