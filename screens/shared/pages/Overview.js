@@ -1,89 +1,117 @@
-import React from "react";
+import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback
-} from "react-native";
+    Image,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    ImageBackground,
+    TouchableWithoutFeedback,
+} from 'react-native';
 import PageHead from '../PageHead.js';
 import Menu from '../Menu.js';
 
-export default class Overview extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
+import overview from './../../../config/overviews.js';
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View>
-          <PageHead images={this.props.content.images} title={this.props.content.title+' Overview'} />
-        </View>
-        <View>
-          <Text style={styles.subSectionTitle}>Overview </Text>
-        </View>
-        <View style={styles.menu}>
-          <Menu icon={this.props.content.images.icon} master={this.props.master}/>
-        </View>
-      </View>
-    );
-  }
+export default class Overview extends React.Component {
+    static navigationOptions = {
+        header: null,
+    };
+
+    render() {
+        var overviewItem = overview[this.props.content.category];
+        return (
+            <View
+                style={
+                    global.orientation === 'landscape'
+                        ? styles.lcontainer
+                        : styles.container
+                }
+            >
+                <View>
+                    <PageHead
+                        images={this.props.content.images}
+                        title={this.props.content.title}
+                    />
+                </View>
+                <ScrollView style={styles.subcontainer}>
+                    <Text style={styles.subSectionTitle}>Overview</Text>
+                    <Text style={styles.overviewText}>{overviewItem}</Text>
+                </ScrollView>
+                <View style={styles.menu}>
+                    <Menu
+                        icon={this.props.content.images.icon}
+                        master={this.props.master}
+                    />
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  title: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: 24,
-    marginBottom: 15
-  },
-  subSectionTitle: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: 20,
-    padding: 20,
-    textTransform: 'uppercase',
-    fontWeight: '600'
-  },
-  subSectionList: {
-    marginBottom: 75
-  },
-  subSection: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 200,
-    paddingBottom: 10
-  },
-  subImageContainer: {
-    height: '80%',
-    width: '100%'
-  },
-  subImage: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: "contain"
-  },
-  subImageTitle: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: 16,
-    marginTop: 15,
-    fontWeight: '500'
-  },
-  menu: {
-    height: 75,
-    width: '100%',
-    position: 'absolute',
-    bottom: 0
-  }
+    container: {
+        flex: 1,
+    },
+    lcontainer: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    subcontainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 10,
+    },
+    title: {
+        width: '100%',
+        textAlign: 'center',
+        fontSize: 24,
+        marginBottom: 15,
+    },
+    subSectionTitle: {
+        width: '100%',
+        textAlign: 'center',
+        fontSize: 22,
+        padding: 20,
+        fontWeight: '600',
+    },
+    subSectionList: {
+        marginBottom: 75,
+    },
+    subSection: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 200,
+        paddingBottom: 10,
+    },
+    subImageContainer: {
+        height: '80%',
+        width: '100%',
+    },
+    subImage: {
+        flex: 1,
+        width: null,
+        height: null,
+        resizeMode: 'contain',
+    },
+    subImageTitle: {
+        width: '100%',
+        textAlign: 'center',
+        fontSize: 16,
+        marginTop: 15,
+        fontWeight: '500',
+    },
+    menu: {
+        height: 75,
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+    },
+    overviewText: {
+        fontSize: 16,
+        lineHeight: 24,
+    },
 });
