@@ -12,7 +12,8 @@ class Api {
     constructor(context) {
         this.context = context;
     }
-	status = 'Checking Network'
+	fetched: false;
+    status = 'Checking Network';
     ready = false;
     config = apiConfig;
     did = {};
@@ -20,14 +21,15 @@ class Api {
     connected = false;
     ldata = false;
     setLocalData = async ready => {
-		this.statusChange('Retrieving local data...');
+        this.statusChange('Retrieving local data...');
         var localData = await AsyncStorage.getItem('localData');
-        if (localData) localData = JSON.parse(localData);
+        if (localData) {
+            localData = JSON.parse(localData);
+            this.statusChange('Done!');
 
-		this.statusChange('Done!');
-
-        this.ldata = localData;
-        if (ready) this.setReady();
+            this.ldata = localData;
+            if (ready) this.setReady();
+        }
 
         return localData;
     };
@@ -75,20 +77,29 @@ class Api {
         return res;
     };
     fetchAll = async () => {
-		NetInfo.addEventListener('connectionChange', this.networkUpdate.bind(this));
+		this.fetched = true;
+        NetInfo.addEventListener(
+            'connectionChange',
+            this.networkUpdate.bind(this)
+        );
         this.networkUpdate();
 
         await this.setLocalData();
 
         // If no internet just say we are ready
-        if (!this.connected || (this.ldata && Object.keys(this.ldata).length) && this.ldata.categories) {
+        if (
+            !this.connected ||
+            (this.ldata &&
+                Object.keys(this.ldata).length &&
+                this.ldata.categories)
+        ) {
             this.setReady();
         } else {
             this.retrieveNewData();
         }
     };
     retrieveNewData = () => {
-		this.statusChange('Retrieving API data...');
+        this.statusChange('Retrieving API data...');
 
         this.setUnready();
 
@@ -128,10 +139,10 @@ class Api {
                 }
 
                 if (done) {
-					this.statusChange('Downloading media images...');
+                    this.statusChange('Downloading media images...');
 
                     this.saveAllMedia().then(() => {
-						this.statusChange('Setting data on device...');
+                        this.statusChange('Setting data on device...');
                         AsyncStorage.setItem(
                             'localData',
                             JSON.stringify(this.data)
@@ -154,19 +165,19 @@ class Api {
             data_finished: false,
         });
     }
-	statusChange(state) {
-		this.status = state;
-		this.context.setState({
-			apiStatus: state
-		})
-	}
-	networkUpdate = async() => {
-		var isConnected = await NetInfo.isConnected.fetch();
+    statusChange(state) {
+        this.status = state;
+        this.context.setState({
+            apiStatus: state,
+        });
+    }
+    networkUpdate = async () => {
+        var isConnected = await NetInfo.isConnected.fetch();
         this.connected = isConnected;
-		this.context.setState({
-			network_version: this.context.state.network_version + 1
-		})
-	}
+        this.context.setState({
+            network_version: this.context.state.network_version + 1,
+        });
+    };
 }
 
 export default Api;

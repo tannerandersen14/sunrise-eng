@@ -110,12 +110,17 @@ export default class HomeScreen extends React.Component {
                                                     ? styles.lmenuContainerHighlight
                                                     : styles.menuContainerHighlight
                                             }
-                                            onPress={() =>
+                                            onPress={() => {
+                                                if (
+                                                    !global.apiController.ldata
+                                                        .categories
+                                                )
+                                                    return false;
                                                 this.props.navigation.navigate(
                                                     'Main',
                                                     categoriesConfig[9]
-                                                )
-                                            }
+                                                );
+                                            }}
                                         >
                                             <Image
                                                 style={
@@ -142,12 +147,17 @@ export default class HomeScreen extends React.Component {
                                                     ? styles.lmenuContainerHighlight
                                                     : styles.menuContainerHighlight
                                             }
-                                            onPress={() =>
+                                            onPress={() => {
+                                                if (
+                                                    !global.apiController.ldata
+                                                        .categories
+                                                )
+                                                    return false;
                                                 this.props.navigation.navigate(
                                                     'Main',
                                                     categoriesConfig[11]
-                                                )
-                                            }
+                                                );
+                                            }}
                                         >
                                             <Image
                                                 style={
@@ -174,12 +184,17 @@ export default class HomeScreen extends React.Component {
                                                     ? styles.lmenuContainerHighlight
                                                     : styles.menuContainerHighlight
                                             }
-                                            onPress={() =>
+                                            onPress={() => {
+                                                if (
+                                                    !global.apiController.ldata
+                                                        .categories
+                                                )
+                                                    return false;
                                                 this.props.navigation.navigate(
                                                     'Main',
                                                     categoriesConfig[12]
-                                                )
-                                            }
+                                                );
+                                            }}
                                         >
                                             <Image
                                                 style={
@@ -206,12 +221,17 @@ export default class HomeScreen extends React.Component {
                                                     ? styles.lmenuContainerHighlight
                                                     : styles.menuContainerHighlight
                                             }
-                                            onPress={() =>
+                                            onPress={() => {
+                                                if (
+                                                    !global.apiController.ldata
+                                                        .categories
+                                                )
+                                                    return false;
                                                 this.props.navigation.navigate(
                                                     'Main',
                                                     categoriesConfig[13]
-                                                )
-                                            }
+                                                );
+                                            }}
                                         >
                                             <Image
                                                 style={
@@ -238,12 +258,17 @@ export default class HomeScreen extends React.Component {
                                                     ? styles.lmenuContainerHighlight
                                                     : styles.menuContainerHighlight
                                             }
-                                            onPress={() =>
+                                            onPress={() => {
+                                                if (
+                                                    !global.apiController.ldata
+                                                        .categories
+                                                )
+                                                    return false;
                                                 this.props.navigation.navigate(
                                                     'Main',
                                                     categoriesConfig[14]
-                                                )
-                                            }
+                                                );
+                                            }}
                                         >
                                             <Image
                                                 style={

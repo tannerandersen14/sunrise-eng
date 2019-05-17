@@ -40,27 +40,30 @@ export default class App extends React.Component {
         this.checkDimensions();
     }
     checkDimensions() {
-		console.log('dimensions', global.dimensions);
+        console.log('dimensions', global.dimensions);
 
-		if (global.dimensions.width > 600) {
-			ScreenOrientation.allowAsync(ScreenOrientation.Orientation.LANDSCAPE, ScreenOrientation.Orientation.PORTRAIT);
-		}
+        if (global.dimensions.width > 600) {
+            ScreenOrientation.allowAsync(
+                ScreenOrientation.Orientation.LANDSCAPE,
+                ScreenOrientation.Orientation.PORTRAIT
+            );
+        }
 
         if (
             global.dimensions.width > 600 &&
             global.dimensions.width > global.dimensions.height
         ) {
-			global.orientation = 'landscape';
+            global.orientation = 'landscape';
         } else {
-			global.orientation = 'portrait';
+            global.orientation = 'portrait';
         }
 
         this.setState({
             network_version: this.state.network_version + 1,
         });
-
     }
     render() {
+        if (!this.api.fetched) this.api.fetchAll();
         if (
             (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) ||
             !global.apiController
@@ -72,7 +75,7 @@ export default class App extends React.Component {
                     onFinish={this._handleFinishLoading}
                 />
             );
-        } else if (!this.state.data_finished || !global.apiController.ldata || !global.apiController.ldata.categories) {
+        } else if (!this.state.data_finished) {
             return (
                 <View style={styles.datacontainer}>
                     <ImageBackground
