@@ -73,10 +73,17 @@ class Api {
         var directoryString = FileSystem.documentDirectory + '/media';
 
         var safeUrl = url.replace(/[^\w.]+/g, '_').toLowerCase();
-        var res = await FileSystem.downloadAsync(
-            url,
-            directoryString + '/' + safeUrl
-        );
+        var res;
+        try {
+            res = await FileSystem.downloadAsync(
+                url,
+                directoryString + '/' + safeUrl
+            );
+        } catch (e) {
+            this.context.setState({
+                failed: 1,
+            });
+        }
 
         return res;
     };
