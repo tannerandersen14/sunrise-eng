@@ -12,7 +12,7 @@ class Api {
     constructor(context) {
         this.context = context;
     }
-	fetched: false;
+    fetched: false;
     status = 'Checking Network';
     ready = false;
     config = apiConfig;
@@ -59,6 +59,10 @@ class Api {
             );
             if (res.status == 200) {
                 this.data.media[index]['local_uri'] = res.uri;
+            } else {
+                this.context.setState({
+                    failed: 1,
+                });
             }
             return res;
         });
@@ -77,12 +81,23 @@ class Api {
         return res;
     };
     fetchAll = async () => {
-		this.fetched = true;
+        this.ready = false;
+        this.context.setState(
+            {
+                data_finished: false,
+            },
+            () => {
+                this.context.setState({
+                    failed: 0,
+                });
+            }
+        );
+        this.fetched = true;
         NetInfo.addEventListener(
             'connectionChange',
             this.networkUpdate.bind(this)
         );
-        this.networkUpdate();
+        await this.networkUpdate();
 
         await this.setLocalData();
 
@@ -98,7 +113,8 @@ class Api {
             this.retrieveNewData();
         }
     };
-    retrieveNewData = () => {
+    retrieveNewData = async () => {
+        await AsyncStorage.removeItem('localData');
         this.statusChange('Retrieving API data...');
 
         this.setUnready();
@@ -117,43 +133,52 @@ class Api {
                 key +
                 '?per_page=100&page=' +
                 page
-        )
-            .then(res => res.json())
-            .then(data => {
-                if (!this.data[key]) this.data[key] = [];
+        ).then(res => {
+            // console.log(res);
+            if (res.status == 200 || res.status == 400) {
+                res.json().then(data => {
+                    if (!this.data[key]) this.data[key] = [];
 
-                for (var i = 0; i < data.length; i++) {
-                    this.data[key].push(data[i]);
-                }
+                    for (var i = 0; i < data.length; i++) {
+                        this.data[key].push(data[i]);
+                    }
 
-                if (data.length) {
-                    this.fetchSpecific(key, page + 1);
-                } else {
-                    this.did[key] = 1;
-                }
+                    if (data.length) {
+                        this.fetchSpecific(key, page + 1);
+                    } else {
+                        this.did[key] = 1;
+                    }
 
-                var done = true;
-                for (var cKey in this.config) {
-                    if (!this.config.hasOwnProperty(cKey)) continue;
-                    if (!this.did[cKey]) done = false;
-                }
+                    var done = true;
+                    for (var cKey in this.config) {
+                        if (!this.config.hasOwnProperty(cKey)) continue;
+                        if (!this.did[cKey]) done = false;
+                    }
 
-                if (done) {
-                    this.statusChange('Downloading media images...');
+                    if (done) {
+                        this.statusChange('Downloading media images...');
 
-                    this.saveAllMedia().then(() => {
-                        this.statusChange('Setting data on device...');
-                        AsyncStorage.setItem(
-                            'localData',
-                            JSON.stringify(this.data)
-                        ).then(() => {
-                            this.setLocalData(true);
+                        this.saveAllMedia().then(() => {
+                            this.statusChange('Setting data on device...');
+                            AsyncStorage.setItem(
+                                'localData',
+                                JSON.stringify(this.data)
+                            ).then(() => {
+                                this.setLocalData(true);
+                            });
                         });
-                    });
-                }
-            });
+                    }
+                });
+            } else {
+                console.log('this failed', res);
+                this.context.setState({
+                    failed: 1,
+                });
+            }
+        });
     };
     setReady() {
+        console.log('set ready');
         this.ready = true;
         this.context.setState({
             data_finished: true,

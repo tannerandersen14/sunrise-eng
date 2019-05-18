@@ -7,6 +7,7 @@ import {
     Text,
     ImageBackground,
     ActivityIndicator,
+    TouchableHighlight,
     Dimensions,
 } from 'react-native';
 import { AppLoading, Asset, Font, Icon, ScreenOrientation } from 'expo';
@@ -28,6 +29,7 @@ export default class App extends React.Component {
         );
 
         this.state = {
+            failed: false,
             apiStatus: '',
             network_version: 0,
             data_finished: false,
@@ -75,7 +77,7 @@ export default class App extends React.Component {
                     onFinish={this._handleFinishLoading}
                 />
             );
-        } else if (!this.state.data_finished) {
+        } else if (!this.state.data_finished || this.state.failed) {
             return (
                 <View style={styles.datacontainer}>
                     <ImageBackground
@@ -88,20 +90,40 @@ export default class App extends React.Component {
                             alignItems: 'center',
                         }}
                     >
-                        <View style={styles.dataoverlay}>
-                            <Text style={styles.dataWaitText}>
-                                Loading New Data
-                            </Text>
-                            <Text style={styles.dataWaitStatus}>
-                                {this.state.apiStatus}
-                            </Text>
-                            <ActivityIndicator
-                                animating={true}
-                                color="#fff"
-                                size="large"
-                                style={styles.activityIndicator}
-                            />
-                        </View>
+                        {this.state.failed ? (
+                            <View style={styles.dataoverlay}>
+                                <Text style={styles.dataWaitText}>Error</Text>
+                                <Text style={styles.dataWaitStatus2}>
+                                    Failed to retrieve all API data. Please try
+                                    again in a few minutes.
+                                </Text>
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.api.fetchAll();
+                                    }}
+                                    style={styles.dataRefreshButton}
+                                >
+                                    <Text style={styles.dataRefreshButtonText}>
+                                        Try Again
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
+                        ) : (
+                            <View style={styles.dataoverlay}>
+                                <Text style={styles.dataWaitText}>
+                                    Loading New Data
+                                </Text>
+                                <Text style={styles.dataWaitStatus}>
+                                    {this.state.apiStatus}
+                                </Text>
+                                <ActivityIndicator
+                                    animating={true}
+                                    color="#fff"
+                                    size="large"
+                                    style={styles.activityIndicator}
+                                />
+                            </View>
+                        )}
                     </ImageBackground>
                 </View>
             );
@@ -222,6 +244,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
     },
+    dataWaitStatus2: {
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '400',
+    },
     activityIndicator: {
         height: 30,
         marginTop: 50,
@@ -234,7 +262,19 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        opacity: 0.5,
-        backgroundColor: 'black',
+        // opacity: 0.5,
+        backgroundColor: 'rgba(0,0,0,.5)',
+    },
+    dataRefreshButton: {
+        backgroundColor: '#fff',
+        opacity: 1,
+        padding: 10,
+        borderRadius: 3,
+        width: 150,
+        marginTop: 10,
+    },
+    dataRefreshButtonText: {
+        textAlign: 'center',
+        color: '#333',
     },
 });
