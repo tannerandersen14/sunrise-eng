@@ -210,11 +210,8 @@ export default class Project extends React.Component {
         }
 
         // return null;
-        if (!categoryConfig[this.props.content.top_category]) {
-                'could not find top category config',
-                this.props.content.top_category
-            );
-        }
+        // if (!categoryConfig[this.props.content.top_category]) {
+        // }
 
         var categoryImages = {
             icon: categoryConfig[this.props.content.top_category]
