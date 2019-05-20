@@ -59,7 +59,6 @@ class SectionsPage extends React.Component {
                     key={i}
                     onPress={() => {
                         if (e.link === 'Projects') {
-                            console.log('ecat', e.category);
                             this.props.navigation.navigate('Projects', {
                                 images: this.props.content.images,
                                 title: this.props.content.title,

@@ -22,7 +22,6 @@ export default class Project extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log('project props', props);
 
         this.state = {
             data: {},
@@ -34,8 +33,6 @@ export default class Project extends React.Component {
         header: null,
     };
     componentWillReceiveProps(props) {
-        // console.log('gonna recieve porspss');
-        // console.log('new props', props);
         this.setState({
             data: {},
             project: props.content.project,
@@ -212,10 +209,8 @@ export default class Project extends React.Component {
             );
         }
 
-        // console.log(data);
         // return null;
         if (!categoryConfig[this.props.content.top_category]) {
-            console.log(
                 'could not find top category config',
                 this.props.content.top_category
             );

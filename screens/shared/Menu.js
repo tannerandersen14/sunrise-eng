@@ -116,12 +116,9 @@ class Menu extends React.Component {
                         } else if (this.current_location === 'Overview') {
                         } else {
                             if (!this.props.navigation.state.params.category) {
-                                console.log('no nav!');
-                                console.log(this.props);
                                 return false;
                             }
 
-                            // console.log('props', this.props);
 
                             this.props.navigation.navigate('Projects', {
                                 category: this.props.navigation.state.params

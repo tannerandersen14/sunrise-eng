@@ -40,7 +40,6 @@ export default class App extends React.Component {
         this.checkDimensions();
     }
     checkDimensions() {
-		console.log('dimensions', global.dimensions);
 
 		if (global.dimensions.width > 600) {
 			ScreenOrientation.allowAsync(ScreenOrientation.Orientation.LANDSCAPE, ScreenOrientation.Orientation.PORTRAIT);
