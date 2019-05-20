@@ -36,7 +36,13 @@ export default class FirmStats extends React.Component {
         for (var i = 0; i < firmConfig.locations.length; i++) {
             locationEls.push(
                 <View style={styles.locationItem}>
-                    <Text style={styles.locationItemText}>
+                    <Text
+                        style={
+                            global.orientation === 'landscape'
+                                ? styles.llocationItemText
+                                : styles.locationItemText
+                        }
+                    >
                         {'\u2022 ' + firmConfig.locations[i]}
                     </Text>
                 </View>
@@ -50,7 +56,13 @@ export default class FirmStats extends React.Component {
 
             for (var x = 0; x < contactData.content.length; x++) {
                 contactSubEls.push(
-                    <Text style={styles.contactItemContentItem}>
+                    <Text
+                        style={
+                            global.orientation === 'landscape'
+                                ? styles.lcontactItemContentItem
+                                : styles.contactItemContentItem
+                        }
+                    >
                         {contactData.content[x]}
                     </Text>
                 );
@@ -59,7 +71,13 @@ export default class FirmStats extends React.Component {
             contactEls.push(
                 <View style={styles.contactItem}>
                     <View>
-                        <Text style={styles.contactItemTitle}>
+                        <Text
+                            style={
+                                global.orientation === 'landscape'
+                                    ? styles.lcontactItemTitle
+                                    : styles.contactItemTitle
+                            }
+                        >
                             {'\u2022 ' + contactData.title}
                         </Text>
                     </View>
@@ -296,8 +314,20 @@ const styles = StyleSheet.create({
     contactItemTitle: {
         fontWeight: '700',
     },
+    lcontactItemTitle: {
+        textAlign: 'center',
+        fontWeight: '700',
+    },
     locationItemText: {},
+    llocationItemText: {
+        textAlign: 'center',
+    },
     contactItemContentItem: {
+        fontSize: 12,
+        paddingLeft: 10,
+    },
+    lcontactItemContentItem: {
+        textAlign: 'center',
         fontSize: 12,
         paddingLeft: 10,
     },
