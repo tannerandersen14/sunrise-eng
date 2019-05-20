@@ -10,6 +10,7 @@ import {
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import Main from '../screens/Main';
+import FirmStats from '../screens/FirmStats';
 
 import OverviewScreen from '../screens/children/Overview';
 import SectionsScreen from '../screens/children/Sections';
@@ -76,6 +77,14 @@ MainStacks.navigationOptions = {
     tabBarLabel: 'Main',
 };
 
+const FirmStatsStacks = createStackNavigator({
+    FirmStats: FirmStats,
+});
+
+FirmStatsStacks.navigationOptions = {
+    tabBarLabel: 'FirmStats',
+};
+
 export default createSwitchNavigator({
     HomeStack,
     SectionsStack,
@@ -83,6 +92,7 @@ export default createSwitchNavigator({
     ProjectViewer,
     OverviewStack,
     MainStacks,
+    FirmStats,
 });
 
 // tonys different approach

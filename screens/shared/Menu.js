@@ -19,7 +19,7 @@ class Menu extends React.Component {
         super(props);
 
         this.current_location = false;
-        this.experiences = ['Main'];
+        this.experiences = ['Main', 'FirmStats'];
         this.routeName = props.navigation.state.routeName;
 
         if (this.routeName) {
@@ -79,6 +79,7 @@ class Menu extends React.Component {
     };
 
     render() {
+		console.log('menu props', this.props);
         var color = 'rgba()';
         return (
             <View style={styles.container}>
@@ -123,7 +124,10 @@ class Menu extends React.Component {
                             this.props.navigation.navigate('Projects', {
                                 category: this.props.navigation.state.params
                                     .category,
-                                title: this.props.navigation.state.params.section || this.props.navigation.state.params.title,
+                                title:
+                                    this.props.navigation.state.params
+                                        .section ||
+                                    this.props.navigation.state.params.title,
                             });
                         }
                     }}
@@ -142,8 +146,9 @@ class Menu extends React.Component {
                                             : this.props.menu &&
                                               this.props.menu.projects
                                             ? 'gray'
-                                            : this.current_location ===
-                                              'Overview'
+                                            : (this.current_location ===
+                                                  'Overview' || this,
+                                              this.current_location === 'FirmStats')
                                             ? 'gray'
                                             : 'black',
                                 }}

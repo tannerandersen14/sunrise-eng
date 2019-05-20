@@ -44,4 +44,13 @@ export default {
         config_icon: require('../images/building_code_icon.png'),
         config_background: require('../images/sunrise-engineering-services-experience-building-code-services-150x150.jpg'),
     },
+    firmstats: {
+        title: 'Firm Stats',
+        subtitle: 'Firm Stats Subsection',
+        category: false,
+        icon: require('../images/firm_stats_icon.png'),
+        background: require('../images/firmstats_background.png'),
+        config_icon: require('../images/firm_stats_icon.png'),
+        config_background: require('../images/firmstats_background.png'),
+    },
 };
