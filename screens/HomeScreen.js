@@ -281,7 +281,7 @@ export default class HomeScreen extends React.Component {
                                             />
                                         </TouchableHighlight>
                                     </View>
-                                    {false ? (
+                                    {true ? (
                                         <View
                                             style={
                                                 global.orientation ===
@@ -300,16 +300,17 @@ export default class HomeScreen extends React.Component {
                                                 onPress={() =>
                                                     this.props.navigation.navigate(
                                                         'FirmStats',
-                                                        {
-                                                            title: 'Firm Stats',
-                                                            subtitle:
-                                                                'Firm Stats Subsection',
-                                                            category: 11,
-                                                            icon: require('../images/firm_stats.png'),
-                                                            background: require('../images/head_background.png'),
-                                                            config_icon: require('../images/natural_gas_icon.png'),
-                                                            config_background: require('../images/head_background.png'),
-                                                        }
+														categoriesConfig['firmstats']
+                                                        // {
+                                                        //     title: 'Firm Stats',
+                                                        //     subtitle:
+                                                        //         'Firm Stats Subsection',
+                                                        //     category: 11,
+                                                        //     icon: require('../images/firm_stats.png'),
+                                                        //     background: require('../images/head_background.png'),
+                                                        //     config_icon: require('../images/natural_gas_icon.png'),
+                                                        //     config_background: require('../images/head_background.png'),
+                                                        // }
                                                     )
                                                 }
                                             >
