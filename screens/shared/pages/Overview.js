@@ -30,22 +30,28 @@ export default class Overview extends React.Component {
                         : styles.container
                 }
             >
-                <View>
-                    <PageHead
-                        images={this.props.content.images}
-                        title={this.props.content.title}
-                    />
-                </View>
-                <ScrollView style={styles.subcontainer}>
-                    <Text style={styles.subSectionTitle}>Overview</Text>
-                    <Text style={styles.overviewText}>{overviewItem}</Text>
-                </ScrollView>
-                <View style={styles.menu}>
-                    <Menu
-                        icon={this.props.content.images.icon}
-                        master={this.props.master}
-                    />
-                </View>
+                {!this.props.inline ? (
+                    <View>
+                        <PageHead
+                            images={this.props.content.images}
+                            title={this.props.content.title}
+                        />
+                    </View>
+                ) : null}
+                {overviewItem ? (
+                    <ScrollView style={styles.subcontainer}>
+                        <Text style={styles.subSectionTitle}>Overview</Text>
+                        <Text style={styles.overviewText}>{overviewItem}</Text>
+                    </ScrollView>
+                ) : null}
+                {!this.props.inline ? (
+                    <View style={styles.menu}>
+                        <Menu
+                            icon={this.props.content.images.icon}
+                            master={this.props.master}
+                        />
+                    </View>
+                ) : null}
             </View>
         );
     }

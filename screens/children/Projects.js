@@ -91,6 +91,17 @@ export default class Projects extends React.Component {
             state_data[allProjects[pKey].id] = new_i;
         }
 
+        var nState_Data = state_data;
+        state_data = [];
+
+        for (var sKey in nState_Data) {
+            if (!nState_Data.hasOwnProperty(sKey)) continue;
+
+            state_data.push(nState_Data[sKey]);
+        }
+
+        state_data = state_data.reverse();
+
         this.setState({
             loadProjects: true,
             projects: state_data,
@@ -102,15 +113,11 @@ export default class Projects extends React.Component {
                 global.apiController.ldata.media[i];
         }
 
-        // Get
-        var state_data = state_data;
-        for (var sK in state_data) {
-            if (state_data.hasOwnProperty(sK)) {
-                var media = state_data[sK].featured_media;
-                state_data[sK].featured_image = mappedMedia[media]
-                    ? mappedMedia[media].local_uri
-                    : false;
-            }
+        for (var i = 0; i < state_data.length; i++) {
+            var media = state_data[i].featured_media;
+            state_data[i].featured_image = mappedMedia[media]
+                ? mappedMedia[media].local_uri
+                : false;
         }
 
         this.setState({
@@ -134,28 +141,25 @@ export default class Projects extends React.Component {
             // },
         ];
 
-        for (var pK in cats) {
-            if (cats.hasOwnProperty(pK)) {
-                var p = cats[pK];
-                if (p.featured_image) {
-                    cat_items.push({
-                        images: {
-                            icon: require('../../images/natural_gas_icon.png'),
-                            background: require('../../images/head_background.png'),
-                            featured_image: p.featured_image,
-                        },
-                        // title: this.props.navigation.state.params.cat_title,
-                        title: p.title.rendered,
-                        section: this.props.navigation.state.params.title,
-                        project: pK,
-                        link: 'Project',
-                        linkprops: {
-                            top_category:
-                                this.category.parent || this.category.id,
-                            category: this.state.category,
-                        },
-                    });
-                }
+        for (var i = 0; i < cats.length; i++) {
+            var p = cats[i];
+            if (p.featured_image) {
+                cat_items.push({
+                    images: {
+                        icon: require('../../images/natural_gas_icon.png'),
+                        background: require('../../images/head_background.png'),
+                        featured_image: p.featured_image,
+                    },
+                    // title: this.props.navigation.state.params.cat_title,
+                    title: p.title.rendered,
+                    section: this.props.navigation.state.params.title,
+                    project: cats[i].id,
+                    link: 'Project',
+                    linkprops: {
+                        top_category: this.category.parent || this.category.id,
+                        category: this.state.category,
+                    },
+                });
             }
         }
 
@@ -171,6 +175,7 @@ export default class Projects extends React.Component {
                 background: this.topcatconfig.config_background,
             },
             title: component_props.title,
+            list_title: this.category.name,
             subSectionTitle: this.category.name,
             sections: sections,
         };

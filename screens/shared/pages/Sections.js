@@ -11,6 +11,8 @@ import {
     TouchableWithoutFeedback,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+
+import OverviewPage from './Overview.js';
 import PageHead from '../PageHead.js';
 import Menu from '../Menu.js';
 
@@ -26,10 +28,20 @@ class SectionsPage extends React.Component {
     }
 
     render() {
+        console.log('list props', this.props);
         if (global.orientation === 'landscape') {
             // styles.subSectionList = styles.lsubSectionList;
             styles.subSection = styles.lsubSection;
             styles.subImage = styles.lsubImage;
+        }
+
+        var listHead = null;
+        if (this.props.content && this.props.content.list_title) {
+            listHead = (
+                <Text style={styles.listHead}>
+                    {this.props.content.list_title}
+                </Text>
+            );
         }
 
         var sections = this.props.content.sections.map((e, i) => {
@@ -70,7 +82,7 @@ class SectionsPage extends React.Component {
                             var eProps = {};
                             if (e.linkprops) eProps = { ...e.linkprops };
 
-                            eProps.images = e.images;
+                            eProps.images = this.props.content.images;
                             eProps.title = e.title;
                             eProps.project = e.project;
                             if (!eProps.top_category)
@@ -105,6 +117,13 @@ class SectionsPage extends React.Component {
             );
         });
 
+        sections.unshift(
+            <OverviewPage
+                content={{ category: this.props.content.category }}
+                inline={true}
+            ></OverviewPage>
+        );
+
         return (
             <View style={styles.container}>
                 <View
@@ -126,16 +145,21 @@ class SectionsPage extends React.Component {
                                 : styles.sections
                         }
                     >
-                        <View>
-                            <Text style={styles.subSectionTitle}>
-                                {this.convertUnicode(
-                                    this.props.content.subSectionTitle
-                                )}
-                            </Text>
-                        </View>
+                        {false ? (
+                            <View>
+                                <Text style={styles.subSectionTitle}>
+                                    {this.convertUnicode(
+                                        this.props.content.subSectionTitle
+                                    )}
+                                </Text>
+                            </View>
+                        ) : null}
                         <ScrollView style={styles.subSectionList}>
+                            {listHead}
                             {global.orientation === 'landscape' ? (
-                                <View style={styles.lsubSectionList}>{sections}</View>
+                                <View style={styles.lsubSectionList}>
+                                    {sections}
+                                </View>
                             ) : (
                                 sections
                             )}
@@ -192,12 +216,14 @@ const styles = StyleSheet.create({
     },
     subSectionList: {
         // flex: 1,
+        paddingTop: 20,
         marginBottom: 75,
     },
     lsubSectionList: {
-		width: '100%',
+        width: '100%',
         flex: 1,
-		flexShrink: 0,
+        flexShrink: 0,
+        marginTop: 10,
         marginBottom: 75,
         flexWrap: 'wrap',
         flexDirection: 'row',
@@ -218,7 +244,7 @@ const styles = StyleSheet.create({
         flexShrink: 0,
         flexGrow: 0,
         height: 300,
-		width: '33%',
+        width: '33%',
         paddingBottom: 20,
     },
     subImageContainer: {
@@ -264,5 +290,12 @@ const styles = StyleSheet.create({
         width: '100%',
         position: 'absolute',
         bottom: 0,
+    },
+    listHead: {
+        textAlign: 'center',
+        marginTop: 8,
+        marginBottom: 16,
+        fontSize: 20,
+        fontWeight: '600',
     },
 });

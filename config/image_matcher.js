@@ -178,7 +178,7 @@ export default {
     15: {
         title: 'As-Built/Mapping',
         image: require('../images/asbuiltmapping.jpg'),
-        sortorder: 4,
+        sortorder: 5,
         overview: {
             title: 'Natural Gas - As Built Mapping',
             description:
@@ -215,6 +215,16 @@ export default {
                 'Topography is an important first task for many improvement and development projects. Our team of surveyors utilizes the GPS, UAV’s, aerial photography, and Laser Scanners to collection, model and represent the existing conditions of your site. Additionally, the land boundary, easements and other information provided by title report is reviewed, analyzed and depicted both in CAD and by plat. We attend to the details and accuracy of the mapping that we prepare.',
         },
     },
+    30: {
+        title: 'Industrial & Mining',
+        image: require('../images/industrial_mining.jpg'),
+        sortorder: 4,
+        overview: {
+            title: 'Engineering - Industrial & Mining',
+            description:
+                'Sunrise has worked with mining and industrial companies across the western United States. Utilizing Sunrise’s diverse services, our staff is able to fill the needs of these clients from permitting and compliance, to roadway design and electrical studies. One of the greatest values a consultant can bring to a mining or industrial client is knowledge of how regulations and processes function. Our mining and industrial experience allows us to foresee possible issues, successfully perform construction administration and carefully design projects, and ensure the finished product is not only economical but successful in improving your site and your business.',
+        },
+    },
     33: {
         title: '3D Imaging',
         image: require('../images/survey-3DImaging.jpg'),
@@ -248,7 +258,7 @@ export default {
     36: {
         title: 'Transportation System Management',
         image: require('../images/gistransportationsystemmanagement.jpg'),
-        sortorder: 3,
+        sortorder: 4,
         overview: {
             title: 'GIS - Transportation System Management',
             description:
@@ -268,7 +278,7 @@ export default {
     38: {
         title: 'Zoning and Land Use Management',
         image: require('../images/giszoningandlandusemanagement.jpg'),
-        sortorder: 4,
+        sortorder: 5,
         overview: {
             title: 'GIS - Zoning and Land Use Management',
             description:
@@ -286,11 +296,11 @@ export default {
         },
     },
     41: {
-        title: 'Building Inespection',
+        title: 'Building Inspection',
         image: require('../images/buildingcodebuildinginspection.jpg'),
         sortorder: 1,
         overview: {
-            title: 'Building Code - Building Inespection',
+            title: 'Building Code - Building Inspection',
             description:
                 'Sunrise Engineering has been providing building inspection services for rural and urban communities throughout the Intermountain West for 30 years. Our personnel have performed and managed building code services for thousands of projects, ranging from residential and multiple-family homes to hospitals and municipal buildings. Our goal is to complete projects that are cost effective to our clients and are compliant with state, and regulatory agency requirements. Our building inspection services help everyone reach that goal.',
         },
@@ -343,6 +353,65 @@ export default {
             title: 'Building Code - Water Resource Management',
             description:
                 'Demand for water is critical and water resource management can be daunting and time-consuming, but Cloud SMART GIS makes organizing water resources simple and affordable. Combining our sophisticated knowledge of water resource maintenance processes with a user-friendly visual platform, Cloud SMART GIS makes it easy to manage water rights, show demand trends, visualize watersheds, and record groundwater levels.',
+        },
+    },
+    123: {
+        title: 'Cemetery Management',
+        image: require('../images/cemetery_management.jpg'),
+        sortorder: 3,
+        overview: {
+            title: 'GIS - Cemetery Management',
+            description:
+                'Sunrise Engineering’s SMART GIS combines cemetery records and GIS mapping to greatly enhance cemetery management. SMART GIS not only provides a visual element to view and explore a cemetery, but it can also aid in maintaining them by only allowing certain individuals to update grave availability, costs, and burial information. Our Cemetery Viewer web app allows searching by name, dates, plot owner, veteran status, or by selecting grave sites. All of the data, from burial plots to historical/cultural knowledge about the sites, remains secure on the Cloud SMART server.',
+        },
+    },
+    124: {
+        title: 'Cloud Smart GIS',
+        image: require('../images/cloud_smart_gis.jpg'),
+        sortorder: 6,
+        overview: {
+            title: 'GIS - Cloud Smart GIS',
+            description:
+                'Cloud SMART GIS® provides unique, clean, and practical mapping solutions for you! We are able to gather, analyze, host, and support your GIS data whether it is a utility, park, or anything you need to see locations. Most of our clients are municipalities and utility providers that want to better (read quick, cost effective, and powerful) maintain their assets. Your data is secure on our GIS Server but can be open to the public through a map on your website. We are supported and support a vast professional engineering staff at Sunrise Engineering. Our GIS team will work with you to find a solution that best fits your needs following our motto of “creating relationships that last and solutions that work.”',
+        },
+    },
+    125: {
+        title: 'Mapping, Management & Analytical Services',
+        image: require('../images/mapping_management_analytic.jpg'),
+        sortorder: 7,
+        overview: {
+            title: 'GIS - Mapping, Management & Analytical Services',
+            description: '',
+        },
+    },
+    40: {
+        title: 'Field Collection & Inspections',
+        image: require('../images/field_inspections.jpg'),
+        sortorder: 2,
+        overview: {
+            title: 'GIS - Field Collection & Inspections',
+            description:
+                'Paper forms and inspection diaries are things of the past—SMART applications bring field inspections and construction management observations into the 21st century. With SMART applications, work can be done in the field on mobile devices, avoiding downtime traveling to the office. Collect critical information, attach observations, and add a digital signature, all in a flash. Field inspection applications may include fire hydrant inspections, water system valve exercising, sewer manhole inspections, pavement management, construction observations, or a number of others.',
+        },
+    },
+    planning_studies: {
+        title: 'Planning and Studies',
+        image: require('../images/planning_studies.jpg'),
+        sortorder: 4,
+        overview: {
+            title: 'Natural Gas - Planning and Studies',
+            description:
+                'Sunrise provides both public and investor-owned utilities with the manpower and expertise to study the financial, environmental, technical and conceptual landscape of proposed pipeline projects. We can help you with preliminary design, then with your “Go/No Go” decisions, and then help you move into the detailed design phase of your pipeline projects.',
+        },
+    },
+    training_qualifications: {
+        title: 'Training & Qualifications',
+        image: require('../images/training_qualifications.jpg'),
+        sortorder: 6,
+        overview: {
+            title: 'Natural Gas - Training & Qualifications',
+            description:
+                'Trained and qualified company and contractor personnel are essential for pipeline construction and maintenance. Sunrise has three decades of experience training and evaluating covered tasks for the people you count in the trenches. We can handle class scheduling, course delivery, documentation and instructor audits. Our instructors are top notch.',
         },
     },
 };

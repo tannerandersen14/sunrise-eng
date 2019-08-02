@@ -25,16 +25,6 @@ export default class HomeScreen extends React.Component {
     };
 
     render() {
-        var refreshButton = global.apiController.connected ? (
-            <TouchableHighlight
-                style={styles.refreshButton}
-                onPress={() => {
-                    global.apiController.retrieveNewData();
-                }}
-            >
-                <Text style={styles.refreshButtonText}>REFRESH CONTENT</Text>
-            </TouchableHighlight>
-        ) : null;
         return (
             <View style={styles.container}>
                 <ScrollView
@@ -102,7 +92,6 @@ export default class HomeScreen extends React.Component {
                                                 : styles.menuContainer
                                         }
                                     >
-                                        {refreshButton}
                                         <TouchableHighlight
                                             style={
                                                 global.orientation ===
@@ -300,7 +289,9 @@ export default class HomeScreen extends React.Component {
                                                 onPress={() =>
                                                     this.props.navigation.navigate(
                                                         'FirmStats',
-														categoriesConfig['firmstats']
+                                                        categoriesConfig[
+                                                            'firmstats'
+                                                        ]
                                                         // {
                                                         //     title: 'Firm Stats',
                                                         //     subtitle:
@@ -323,6 +314,57 @@ export default class HomeScreen extends React.Component {
                                                     }
                                                     source={require('../images/firm_stats.png')}
                                                 />
+                                            </TouchableHighlight>
+                                        </View>
+                                    ) : null}
+                                    {global.apiController.connected ? (
+                                        <View
+                                            style={
+                                                global.orientation ===
+                                                'landscape'
+                                                    ? styles.lmenuContainer
+                                                    : styles.refreshMenuContainer
+                                            }
+                                        >
+                                            <TouchableHighlight
+                                                style={
+                                                    global.orientation ===
+                                                    'landcape'
+                                                        ? styles.lmenuContainerHighlight
+                                                        : styles.refreshMenuContainerHighlight
+                                                }
+                                                onPress={() => {
+                                                    global.apiController.retrieveNewData();
+                                                }}
+                                            >
+                                                <View
+                                                    style={
+                                                        global.orientation ===
+                                                        'landcape'
+                                                            ? styles.lRefreshItem
+                                                            : styles.refreshItem
+                                                    }
+                                                >
+                                                    <Image
+                                                        style={[
+                                                            global.orientation ===
+                                                            'landscape'
+                                                                ? styles.lmenuRefreshImage
+                                                                : styles.menuRefreshImage,
+                                                        ]}
+                                                        source={require('../images/refresh_content.png')}
+                                                    />
+                                                    <Text
+                                                        style={
+                                                            global.orientation ===
+                                                            'landcape'
+                                                                ? styles.lRefreshItemText
+                                                                : styles.refreshItemText
+                                                        }
+                                                    >
+                                                        REFRESH CONTENT
+                                                    </Text>
+                                                </View>
                                             </TouchableHighlight>
                                         </View>
                                     ) : null}
@@ -362,7 +404,7 @@ const styles = StyleSheet.create({
     },
     innerContent: {
         flex: 1,
-        paddingBottom: 90,
+        paddingBottom: 60,
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.2)',
         justifyContent: 'center',
@@ -420,7 +462,7 @@ const styles = StyleSheet.create({
     refreshButton: {
         margin: 'auto',
         alignSelf: 'center',
-        paddingBottom: 10,
+        // paddingBottom: 10,
     },
     refreshButtonText: {
         textAlign: 'center',
@@ -430,10 +472,14 @@ const styles = StyleSheet.create({
     },
     menuHome: {
         width: '90%',
-        marginTop: '15%',
+        marginTop: '3%',
     },
     menuContainer: {
         width: '100%',
+    },
+    refreshMenuContainer: {
+        width: '100%',
+        display: 'flex',
     },
     lmenuContainer: {
         width: '100%',
@@ -442,8 +488,20 @@ const styles = StyleSheet.create({
     menuContainerHighlight: {
         height: 50,
         width: '100%',
-        marginTop: 10,
+        marginTop: 0,
         marginBottom: 10,
+    },
+    refreshMenuContainerHighlight: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        height: 30,
+        width: '100%',
+        marginTop: 4,
+        maxWidth: 400,
+        alignSelf: 'center',
+
+        // marginBottom: '1%',
     },
     lmenuContainerHighlight: {
         height: 200,
@@ -465,6 +523,56 @@ const styles = StyleSheet.create({
         width: '70%',
         maxWidth: 400,
         resizeMode: 'contain',
-        marginBottom: 30,
+        // marginBottom: 10,
+    },
+    menuRefreshImage: {
+        // width: '20%',
+        width: 30,
+        height: 30,
+        // width: 52,
+        // height: 52,
+        resizeMode: 'contain',
+    },
+    lmenuRefreshImage: {
+        height: 35,
+        width: 35,
+        marginRight: 0,
+        alignSelf: 'center',
+        // width: 52,
+        // height: 52,
+        resizeMode: 'contain',
+    },
+    refreshItem: {
+        alignSelf: 'center',
+        maxWidth: 400,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flex: 1,
+    },
+    lRefreshItem: {
+        // marginBottom: 10,
+        alignSelf: 'center',
+        maxWidth: 400,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    },
+    refreshItemText: {
+        // flex: 1,
+        alignSelf: 'center',
+        marginLeft: 10,
+        fontSize: 14,
+        color: '#fff',
+    },
+    lRefreshItemText: {
+        flex: 1,
+        alignSelf: 'center',
+        marginLeft: 10,
+        fontSize: 24,
+        color: '#fff',
     },
 });

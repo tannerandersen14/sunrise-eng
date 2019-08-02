@@ -79,7 +79,6 @@ class Menu extends React.Component {
     };
 
     render() {
-		console.log('menu props', this.props);
         var color = 'rgba()';
         return (
             <View style={styles.container}>

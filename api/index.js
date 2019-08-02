@@ -1,17 +1,24 @@
 import { AsyncStorage, NetInfo } from 'react-native';
 import { FileSystem } from 'expo';
 
+import addCats from './../config/add_categories.js';
+
 const apiConfig = {
     media: 'https://sunrise-eng.com/wp-json/wp/v2/media',
     categories: 'https://sunrise-eng.com/wp-json/wp/v2/categories',
     projects: 'https://sunrise-eng.com/wp-json/wp/v2/projects',
-    posts: 'https://sunrise-eng.com/wp-json/wp/v2/posts',
+    // posts: 'https://sunrise-eng.com/wp-json/wp/v2/posts',
+};
+
+const sleep = milliseconds => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
 class Api {
     constructor(context) {
         this.context = context;
     }
+    sleepInc: 100;
     fetched: false;
     status = 'Checking Network';
     ready = false;
@@ -38,7 +45,7 @@ class Api {
         var directoryString = FileSystem.documentDirectory + '/media';
 
         try {
-            FileSystem.deleteAsync(directoryString);
+            FileSystem.deleteAsync(directoryString, { idempotent: true });
         } catch (e) {}
 
         var directoryExists = true;
@@ -49,22 +56,72 @@ class Api {
         }
 
         if (!directoryExists) {
-            await FileSystem.makeDirectoryAsync(directoryString);
+            await FileSystem.makeDirectoryAsync(directoryString, {
+                intermediates: true,
+            });
         }
 
-        // var promises = [];
+        // Create promise array to retrieve all images
         var promises = this.data.media.map(async (item, index) => {
-            var res = await this.saveMediaToLocal(
-                this.data.media[index].source_url
-            );
-            if (res.status == 200) {
-                this.data.media[index]['local_uri'] = res.uri;
+            if (typeof this.sleepInc === 'undefined') this.sleepInc = 0;
+
+            // Wait a random amount of time before moving to the next image - need to prevent server from imploding (it's pretty small)
+            var incThis = Math.floor(Math.random() * (350 - 50 + 1)) + 50;
+            this.sleepInc += incThis;
+            var mySleep = this.sleepInc;
+            await sleep(mySleep);
+
+            if (
+                this.data.media[index].title &&
+                this.data.media[index].title.rendered
+            ) {
+                this.statusChange(
+                    'Downloading media image: ' +
+                        this.data.media[index].title.rendered
+                );
+            } else if (this.data.media[index].slug) {
+                this.statusChange(
+                    'Downloading media image: ' + this.data.media[index].slug
+                );
             } else {
+                this.statusChange('Downloading media images...');
+            }
+
+            var useUrl = this.data.media[index].source_url;
+            if (
+                this.data.media[index].media_details &&
+                this.data.media[index].media_details.sizes
+            ) {
+                if (this.data.media[index].media_details.sizes.medium_large) {
+                    useUrl = this.data.media[index].media_details.sizes
+                        .medium_large.source_url;
+                } else if (this.data.media[index].media_details.sizes.medium) {
+                    useUrl = this.data.media[index].media_details.sizes.medium
+                        .source_url;
+                } else if (this.data.media[index].media_details.sizes.large) {
+                    useUrl = this.data.media[index].media_details.sizes.large
+                        .source_url;
+                }
+            }
+            var res = await this.saveMediaToLocal(useUrl);
+            if (typeof res !== 'undefined' && res) {
+                if (res.status == 200) {
+                    this.data.media[index]['local_uri'] = res.uri;
+                } else if (res) {
+                    // console.log('failed res', res);
+                    this.failed = true;
+                    this.context.setState({
+                        failed: 1,
+                    });
+                }
+                return res;
+            } else {
+                this.failed = true;
                 this.context.setState({
                     failed: 1,
                 });
             }
-            return res;
+            return null;
         });
 
         await Promise.all(promises);
@@ -80,9 +137,9 @@ class Api {
                 directoryString + '/' + safeUrl
             );
         } catch (e) {
-            this.context.setState({
-                failed: 1,
-            });
+            // this.context.setState({
+            //     failed: 1,
+            // });
         }
 
         return res;
@@ -134,6 +191,7 @@ class Api {
     };
     fetchSpecific = async (key, page) => {
         page = page || 1;
+        this.failed = false;
 
         fetch(
             'https://sunrise-eng.com/wp-json/wp/v2/' +
@@ -141,7 +199,6 @@ class Api {
                 '?per_page=100&page=' +
                 page
         ).then(res => {
-            // console.log(res);
             if (res.status == 200 || res.status == 400) {
                 res.json().then(data => {
                     if (!this.data[key]) this.data[key] = [];
@@ -163,9 +220,22 @@ class Api {
                     }
 
                     if (done) {
+                        // Add custom categories
+                        for (var i = 0; i < addCats.length; i++) {
+                            this.data.categories.push(
+                                addCats[i]
+                            );
+                        }
+
+                        console.log(
+                            'these are the new cats',
+                            this.data.categories
+                        );
+
                         this.statusChange('Downloading media images...');
 
                         this.saveAllMedia().then(() => {
+                            if (this.failed) return false;
                             this.statusChange('Setting data on device...');
                             AsyncStorage.setItem(
                                 'localData',
@@ -177,7 +247,8 @@ class Api {
                     }
                 });
             } else {
-                console.log('this failed', res);
+                // console.log('failed res', res);
+                // console.log('this failed', res);
                 this.context.setState({
                     failed: 1,
                 });
@@ -185,7 +256,7 @@ class Api {
         });
     };
     setReady() {
-        console.log('set ready');
+        // console.log('set ready');
         this.ready = true;
         this.context.setState({
             data_finished: true,

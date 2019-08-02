@@ -42,8 +42,10 @@ export default class App extends React.Component {
         this.checkDimensions();
     }
     checkDimensions() {
-
-        if (global.dimensions.width > 600) {
+        if (
+            global.dimensions.width > 600 &&
+            global.dimensions.width > global.dimensions.height
+        ) {
             ScreenOrientation.allowAsync(
                 ScreenOrientation.Orientation.LANDSCAPE,
                 ScreenOrientation.Orientation.PORTRAIT
@@ -59,6 +61,7 @@ export default class App extends React.Component {
             global.orientation = 'portrait';
         }
 
+        console.log(global.orientation);
         this.setState({
             network_version: this.state.network_version + 1,
         });
@@ -140,6 +143,16 @@ export default class App extends React.Component {
 
     _loadResourcesAsync = async () => {
         var assets = [
+            require('./images/cemetery_management.jpg'),
+            require('./images/cloud_smart_gis.jpg'),
+            require('./images/field_inspections.jpg'),
+            require('./images/industrial_mining.jpg'),
+            require('./images/mapping_management_analytic.jpg'),
+            require('./images/planning_studies.jpg'),
+            require('./images/training_qualifications.jpg'),
+            require('./images/refresh_content.png'),
+            require('./images/3rdpartyinspectionandaudit.jpg'),
+            require('./images/3rdpartyinspectionandaudit.jpg'),
             require('./images/3rdpartyinspectionandaudit.jpg'),
             require('./images/asbuiltmapping.jpg'),
             require('./images/building_code.png'),

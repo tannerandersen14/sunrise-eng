@@ -6,9 +6,9 @@
         "privacy": "public",
         "sdkVersion": "31.0.0",
         "platforms": ["ios", "android"],
-        "version": "1.0.0",
+        "version": "1.0.5",
         "orientation": "portrait",
-        "icon": "./assets/images/icon.png",
+        "icon": "./assets/images/robot-dev.png",
         "splash": {
             "image": "./assets/images/splash.png",
             "resizeMode": "cover",
@@ -17,14 +17,10 @@
         "updates": {
             "fallbackToCacheTimeout": 0
         },
-        "assetBundlePatterns": [
-            "**/*",
-			"./images/*"
-
-        ],
+        "assetBundlePatterns": ["**/*", "./images/*"],
         "ios": {
             "supportsTablet": true,
-			"bundleIdentifier": "com.sunrise.sunriseapp"
-        },
+            "bundleIdentifier": "com.sunrise-eng.app"
+        }
     }
 }

@@ -68,35 +68,47 @@ export default class Main extends React.Component {
     sub_category_rows = () => {
         var cats = this.state.sub_catagories;
         var cat_items = [
-            {
-                pic: require('../images/sunrise_logo_black.png'),
-                top: 1,
-                title: 'Overview',
-                link: 'Overview',
-                linkprops: {
-                    category: this.navProps.category,
-                    top_category: this.navProps.category,
-                },
-            },
+            // # Don't add overview nav option - we're going to show overview inline on category page
+            // {
+            //     pic: require('../images/sunrise_logo_black.png'),
+            //     top: 1,
+            //     title: 'Overview',
+            //     link: 'Overview',
+            //     linkprops: {
+            //         category: this.navProps.category,
+            //         top_category: this.navProps.category,
+            //     },
+            // },
         ];
 
         var image_matcher = imageMatcher;
-
         for (var pK in cats) {
             if (cats.hasOwnProperty(pK)) {
                 var p = cats[pK];
-                var p_image = require('../images/section_image.png');
+                // var p_image = require('../images/section_image.png');
+                var p_image = null;
                 var p_title = p.title;
+                var p_sort = -1;
 
                 if (image_matcher[p.category]) {
                     if (image_matcher[p.category].image)
                         p_image = image_matcher[p.category].image;
                     if (image_matcher[p.category].title)
                         p_title = image_matcher[p.category].title;
+                    if (
+                        typeof image_matcher[p.category].sortorder !==
+                        'undefined'
+                    )
+                        p_sort = image_matcher[p.category].sortorder;
+                }
+
+                if (p_image === null) {
+                    continue;
                 }
 
                 cat_items.push({
                     pic: p_image,
+                    sort: p_sort,
                     title: p_title,
                     link: 'Projects',
                     category: p.category,
@@ -104,6 +116,16 @@ export default class Main extends React.Component {
                 });
             }
         }
+
+        cat_items.sort(function(a, b) {
+            if (a.sort === -1) return -1;
+
+            if (a.sort === b.sort) {
+                return 0;
+            } else {
+                return a.sort < b.sort ? -1 : 1;
+            }
+        });
 
         return cat_items;
     };
@@ -126,6 +148,8 @@ export default class Main extends React.Component {
             title: this.navProps.title,
             subSectionTitle: this.navProps.subtitle,
             sections: sections,
+            category: this.navProps.category,
+            top_category: this.navProps.category,
         };
         return (
             <View

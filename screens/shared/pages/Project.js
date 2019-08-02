@@ -151,6 +151,14 @@ export default class Project extends React.Component {
                 </View>
             );
         }
+        if (data.project_details_project_services) {
+            infoComponents.push(
+                <View key="services" style={styles.listItem}>
+                    <Text style={styles.header}>Services</Text>
+                    <Text>{data.project_details_project_services}</Text>
+                </View>
+            );
+        }
 
         if (infoComponents.length > 0) {
             info_component = (
@@ -187,9 +195,9 @@ export default class Project extends React.Component {
             for (var i = 0; i < 9; i++) {
                 if (data['project_highlights_' + i + '_project_highlight']) {
                     highlightComponents.push(
-                        <View key={i} class={styles.highlights_section}>
+                        <View key={i} style={styles.highlights_section}>
                             <Text>
-                                {
+                                {'\u25E6 ' +
                                     data[
                                         'project_highlights_' +
                                             i +
@@ -321,9 +329,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     listItem: {
+        flexWrap: 'wrap',
+        width: '100%',
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        marginBottom: 16,
     },
     overviewContainer: {
         padding: 20,
@@ -342,7 +353,8 @@ const styles = StyleSheet.create({
     header: {
         fontWeight: '600',
         fontSize: 16,
-        marginRight: 20,
+        // marginRight: 20,
+        marginBottom: 3,
     },
     subSectionTitle: {
         width: '100%',
@@ -373,7 +385,7 @@ const styles = StyleSheet.create({
     },
     highlights_section: {
         flex: 1,
-        marginTop: 10,
+        marginTop: 8,
         flexDirection: 'column',
     },
     subImageContainer: {
