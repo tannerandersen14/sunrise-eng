@@ -117,9 +117,24 @@ class SectionsPage extends React.Component {
             );
         });
 
+        if (sections && sections.length) {
+            sections.unshift(
+                <View style={styles.subHeader}>
+                    <Text style={styles.subHeaderText}>
+                        {this.props.content.type == 'projects'
+                            ? 'Projects'
+                            : 'Services'}
+                    </Text>
+                </View>
+            );
+        }
+
         sections.unshift(
             <OverviewPage
-                content={{ category: this.props.content.category }}
+                content={{
+                    category: this.props.content.category,
+                    type: this.props.content.type,
+                }}
                 inline={true}
             ></OverviewPage>
         );
@@ -213,6 +228,20 @@ const styles = StyleSheet.create({
         padding: 20,
         textTransform: 'uppercase',
         fontWeight: '600',
+    },
+    subHeader: {
+        borderTopColor: '#777',
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: 'transparent',
+        borderWidth: 1,
+        width: '100%',
+        padding: 20,
+        fontWeight: '600',
+    },
+    subHeaderText: {
+        fontSize: 24,
+        textAlign: 'center',
     },
     subSectionList: {
         // flex: 1,

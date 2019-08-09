@@ -38,7 +38,8 @@ class Menu extends React.Component {
         if (this.current_location) {
             if (
                 this.current_location === 'Overview' ||
-                this.current_location === 'Projects'
+                this.current_location === 'Projects' ||
+                this.current_location === 'ProjectViewer'
             ) {
                 var topCat = this.props.navigation.state.params.top_category;
                 if (!topCat) {
@@ -102,7 +103,7 @@ class Menu extends React.Component {
                                             ? '#FFC900'
                                             : this.current_location ===
                                               'ProjectViewer'
-                                            ? 'gray'
+                                            ? 'black'
                                             : 'black',
                                 }}
                                 source={this.props.icon}

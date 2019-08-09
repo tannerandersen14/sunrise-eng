@@ -11,6 +11,7 @@ import {
     Dimensions,
 } from 'react-native';
 import { AppLoading, Asset, Font, Icon, ScreenOrientation } from 'expo';
+import { ProgressBar, Colors } from 'react-native-paper';
 import AppNavigator from './navigation/AppNavigator';
 
 import Api from './api/index.js';
@@ -30,6 +31,7 @@ export default class App extends React.Component {
 
         this.state = {
             failed: false,
+            progress: 0,
             apiStatus: '',
             network_version: 0,
             data_finished: false,
@@ -68,6 +70,7 @@ export default class App extends React.Component {
     }
     render() {
         if (!this.api.fetched) this.api.fetchAll();
+        console.log('my progress', this.state.progress);
         if (
             (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) ||
             !global.apiController
@@ -118,6 +121,11 @@ export default class App extends React.Component {
                                 <Text style={styles.dataWaitStatus}>
                                     {this.state.apiStatus}
                                 </Text>
+                                <ProgressBar
+                                    style={{ marginTop: 40, width: '90%', maxWidth: 400, height: 15 }}
+                                    progress={this.state.progress}
+                                    color="#ffffff"
+                                />
                                 <ActivityIndicator
                                     animating={true}
                                     color="#fff"

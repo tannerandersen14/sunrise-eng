@@ -27,6 +27,7 @@ class Api {
     data = {};
     connected = false;
     ldata = false;
+    maxProgress = 0;
     setLocalData = async ready => {
         this.statusChange('Retrieving local data...');
         var localData = await AsyncStorage.getItem('localData');
@@ -41,11 +42,18 @@ class Api {
         return localData;
     };
     saveAllMedia = async () => {
-        if (!this.data || !this.data.media) return false;
+        if (!this.data || !this.data.media) {
+            this.context.setState({
+                failed: true
+            });
+            return false;
+        }
+
+        this.statusChange('Preparing file system...');
         var directoryString = FileSystem.documentDirectory + '/media';
 
         try {
-            FileSystem.deleteAsync(directoryString, { idempotent: true });
+            await FileSystem.deleteAsync(directoryString, { idempotent: true });
         } catch (e) {}
 
         var directoryExists = true;
@@ -61,15 +69,25 @@ class Api {
             });
         }
 
+        this.maxProgress = (this.data.media.length + 50);
+        this.context.setState({
+            progress: (50 / this.maxProgress)
+        });
+
         // Create promise array to retrieve all images
         var promises = this.data.media.map(async (item, index) => {
             if (typeof this.sleepInc === 'undefined') this.sleepInc = 0;
 
             // Wait a random amount of time before moving to the next image - need to prevent server from imploding (it's pretty small)
             var incThis = Math.floor(Math.random() * (350 - 50 + 1)) + 50;
+
             this.sleepInc += incThis;
             var mySleep = this.sleepInc;
             await sleep(mySleep);
+
+            this.context.setState({
+                progress: ((index + 50) / this.maxProgress)
+            });
 
             if (
                 this.data.media[index].title &&
@@ -149,6 +167,7 @@ class Api {
         this.context.setState(
             {
                 data_finished: false,
+                progress: 0,
             },
             () => {
                 this.context.setState({
@@ -161,8 +180,8 @@ class Api {
             'connectionChange',
             this.networkUpdate.bind(this)
         );
-        await this.networkUpdate();
 
+        await this.networkUpdate();
         await this.setLocalData();
 
         // If no internet just say we are ready
@@ -179,9 +198,13 @@ class Api {
     };
     retrieveNewData = async () => {
         await AsyncStorage.removeItem('localData');
-        this.statusChange('Retrieving API data...');
+        this.data = {};
+        this.did = {};
+        this.ldata = false;
+        this.sleepInc = 0;
 
-        this.setUnready();
+        this.statusChange('Retrieving API data...');
+        await this.setUnready();
 
         // Grab all the new stuff if we have internet
         for (var cKey in this.config) {
@@ -222,20 +245,16 @@ class Api {
                     if (done) {
                         // Add custom categories
                         for (var i = 0; i < addCats.length; i++) {
-                            this.data.categories.push(
-                                addCats[i]
-                            );
+                            this.data.categories.push(addCats[i]);
                         }
 
-                        console.log(
-                            'these are the new cats',
-                            this.data.categories
-                        );
-
-                        this.statusChange('Downloading media images...');
-
                         this.saveAllMedia().then(() => {
-                            if (this.failed) return false;
+                            if (this.failed) {
+                                this.context.setState({
+                                    failed: 1,
+                                });
+                                return false;
+                            }
                             this.statusChange('Setting data on device...');
                             AsyncStorage.setItem(
                                 'localData',
@@ -247,8 +266,6 @@ class Api {
                     }
                 });
             } else {
-                // console.log('failed res', res);
-                // console.log('this failed', res);
                 this.context.setState({
                     failed: 1,
                 });
@@ -256,18 +273,19 @@ class Api {
         });
     };
     setReady() {
-        // console.log('set ready');
         this.ready = true;
         this.context.setState({
             data_finished: true,
+            progress: 1,
         });
     }
-    setUnready() {
+    setUnready = async () => {
         this.ready = false;
-        this.context.setState({
+        await this.context.setState({
             data_finished: false,
+            progress: 0,
         });
-    }
+    };
     statusChange(state) {
         this.status = state;
         this.context.setState({

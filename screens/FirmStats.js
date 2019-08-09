@@ -106,6 +106,10 @@ export default class FirmStats extends React.Component {
                         contentContainerStyle={styles.overviewContainer}
                     >
                         <View style={styles.locationList}>{locationEls}</View>
+                        <View style={styles.generalHead}>
+                            <Text style={styles.generalHeadTitle}>General Information</Text>
+                            <Text style={styles.generalHeadNum}>800.560.6151</Text>
+                        </View>
                         <View style={styles.contactList}>{contactEls}</View>
                     </ScrollView>
                 </View>
@@ -121,6 +125,25 @@ export default class FirmStats extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    generalHead: {
+        borderTopColor: '#ccc',
+        borderLeftColor: '#fff',
+        borderRightColor: '#fff',
+        borderBottomColor: '#fff',
+        borderWidth: 1,
+    },
+    generalHeadTitle: {
+        fontWeight: '600',
+        marginTop: 10,
+        fontSize: 24,
+        textAlign: 'center'
+    },
+    generalHeadNum: {
+        marginTop: 6,
+        marginBottom: 10,
+        fontSize: 16,
+        textAlign: 'center'
+    },
     sunriseContainer: {
         width: '30%',
         height: 50,

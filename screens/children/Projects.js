@@ -170,6 +170,8 @@ export default class Projects extends React.Component {
         var sections = this.project_rows();
         var component_props = this.props.navigation.state.params;
         var config = {
+            category: this.category.id,
+            type: 'projects',
             images: {
                 icon: this.topcatconfig.config_icon,
                 background: this.topcatconfig.config_background,

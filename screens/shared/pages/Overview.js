@@ -14,6 +14,7 @@ import PageHead from '../PageHead.js';
 import Menu from '../Menu.js';
 
 import overview from './../../../config/overviews.js';
+import imageMatcher from './../../../config/image_matcher.js';
 
 export default class Overview extends React.Component {
     static navigationOptions = {
@@ -21,7 +22,17 @@ export default class Overview extends React.Component {
     };
 
     render() {
+        console.log('my props', this.props);
         var overviewItem = overview[this.props.content.category];
+        if (
+            !overviewItem &&
+            imageMatcher &&
+            imageMatcher[this.props.content.category] &&
+            imageMatcher[this.props.content.category].overview
+        ) {
+            overviewItem =
+                imageMatcher[this.props.content.category].overview.description;
+        }
         return (
             <View
                 style={
@@ -39,8 +50,16 @@ export default class Overview extends React.Component {
                     </View>
                 ) : null}
                 {overviewItem ? (
-                    <ScrollView style={styles.subcontainer}>
-                        <Text style={styles.subSectionTitle}>Overview</Text>
+                    <ScrollView
+                        style={
+                            this.props.content.type == 'projects'
+                                ? styles.pSubcontainer
+                                : styles.subcontainer
+                        }
+                    >
+                        {this.props.content.type == 'projects' ? null : (
+                            <Text style={styles.subSectionTitle}>Overview</Text>
+                        )}
                         <Text style={styles.overviewText}>{overviewItem}</Text>
                     </ScrollView>
                 ) : null}
@@ -64,6 +83,12 @@ const styles = StyleSheet.create({
     lcontainer: {
         flex: 1,
         flexDirection: 'row',
+    },
+    pSubcontainer: {
+        flex: 1,
+        paddingRight: 15,
+        paddingLeft: 15,
+        paddingBottom: 10,
     },
     subcontainer: {
         flex: 1,
