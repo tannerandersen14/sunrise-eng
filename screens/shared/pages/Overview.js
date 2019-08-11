@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     subSectionTitle: {
         width: '100%',
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 24,
         padding: 20,
         fontWeight: '600',
     },

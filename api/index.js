@@ -85,25 +85,27 @@ class Api {
             var mySleep = this.sleepInc;
             await sleep(mySleep);
 
+            // Update progress in interface component - progress bar
             this.context.setState({
                 progress: ((index + 50) / this.maxProgress)
             });
 
-            if (
-                this.data.media[index].title &&
-                this.data.media[index].title.rendered
-            ) {
-                this.statusChange(
-                    'Downloading media image: ' +
-                        this.data.media[index].title.rendered
-                );
-            } else if (this.data.media[index].slug) {
-                this.statusChange(
-                    'Downloading media image: ' + this.data.media[index].slug
-                );
-            } else {
-                this.statusChange('Downloading media images...');
-            }
+            // # Remove this for now - shows the name of the image being downloaded
+            // if (
+            //     this.data.media[index].title &&
+            //     this.data.media[index].title.rendered
+            // ) {
+            //     this.statusChange(
+            //         'Downloading media image: ' +
+            //             this.data.media[index].title.rendered
+            //     );
+            // } else if (this.data.media[index].slug) {
+            //     this.statusChange(
+            //         'Downloading media image: ' + this.data.media[index].slug
+            //     );
+            // } else {
+            //     this.statusChange('Downloading media images...');
+            // }
 
             var useUrl = this.data.media[index].source_url;
             if (
@@ -142,6 +144,7 @@ class Api {
             return null;
         });
 
+        this.statusChange('Downloading media images...');
         await Promise.all(promises);
     };
     saveMediaToLocal = async url => {

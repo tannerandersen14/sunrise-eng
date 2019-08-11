@@ -346,7 +346,7 @@ export default class HomeScreen extends React.Component {
                                 </View>
                             </TouchableHighlight>
                             <Text style={styles.versionContainerText}>
-                                Version 1.0.8
+                                Version 1.0.9
                             </Text>
                         </View>
                     </ImageBackground>

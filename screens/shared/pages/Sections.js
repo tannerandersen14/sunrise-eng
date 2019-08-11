@@ -240,8 +240,11 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     subHeaderText: {
-        fontSize: 24,
+        width: '100%',
         textAlign: 'center',
+        fontSize: 24,
+        paddingTop: 10,
+        fontWeight: '600',
     },
     subSectionList: {
         // flex: 1,
@@ -324,7 +327,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
         marginBottom: 16,
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: '600',
     },
 });
